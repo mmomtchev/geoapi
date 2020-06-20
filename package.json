@@ -1,0 +1,33 @@
+{
+  "name": "geoapi",
+  "version": "0.0.1",
+  "description": "A Node.js/Express API server resolving lat:lng to inhabited places, administrative divisions and postal codes",
+  "type": "module",
+  "module": "index.js",
+  "scripts": {
+    "test": "test",
+    "download": "node src/download",
+    "start": "node --max-old-space-size=8192 src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmomtchev/geoapi.git"
+  },
+  "keywords": [
+    "geoapi",
+    "geonames",
+    "postcodes"
+  ],
+  "author": "Momtchil Momtchev <momtchil@momtchev.com>",
+  "license": "LGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/mmomtchev/geoapi/issues"
+  },
+  "homepage": "https://github.com/mmomtchev/geoapi#readme",
+  "dependencies": {
+    "collections": "^5.1.11",
+    "express": "^4.17.1",
+    "flatbush": "^3.3.0",
+    "geoflatbush": "^1.0.0"
+  }
+}

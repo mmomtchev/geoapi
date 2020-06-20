@@ -1,0 +1,42 @@
+{
+    "data_dir": "data",
+    "max_distance": 22.224,
+    "geodb": {
+        "file": "allCountries.txt",
+        "src": "https://download.geonames.org/export/dump/allCountries.zip",
+        "filter": {
+            "class": "P",
+            "country": "FR|AD"
+        },
+        "fields": [
+            "name",
+            "ascii",
+            "class",
+            "country",
+            "tz",
+            "alt"
+        ]
+    },
+    "altdb": {
+        "file": "alternateNamesV2.txt",
+        "src": "https://download.geonames.org/export/dump/alternateNamesV2.zip",
+        "fields": {
+            "first": [ "post" ],
+            "all": []
+        }
+    },
+    "geojson": [
+        {
+            "file": "contour-des-codes-postaux.geojson",
+            "src": "https://public.opendatasoft.com/explore/dataset/contour-des-codes-postaux/download/?format=geojson&timezone=Europe/Berlin&lang=en",
+            "apply_filter": {
+                "country": "FR",
+                "class": "P"
+            },
+            "match": {
+                "post": "code_postal"
+            }
+        }
+    ],
+    "pidfile": "geo.pid"
+}
