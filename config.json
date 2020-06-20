@@ -1,6 +1,7 @@
 {
     "data_dir": "data",
     "max_distance": 22.224,
+    "cors": "*",
     "geodb": {
         "file": "allCountries.txt",
         "src": "https://download.geonames.org/export/dump/allCountries.zip",

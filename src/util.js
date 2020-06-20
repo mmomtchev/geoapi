@@ -1,3 +1,6 @@
+
+// This is much faster than the "official" async readline in node
+// which requires resolving one Promise per line read
 export async function readLines(rs, ctx, parseLine) {
     let t0 = Date.now();
     rs.setEncoding('utf-8');
@@ -19,7 +22,7 @@ export function radians(x) {
 export function WGS84Distance(lon1, lat1, lon2, lat2) {
     // FCC formula for ellipsoidal Earth projected to a plane
     // https://en.wikipedia.org/wiki/Geographical_distance
-    
+
     const df = (lat1 - lat2);
     const dg = (lon1 - lon2);
     const fm = radians((lat1 + lat2) / 2);

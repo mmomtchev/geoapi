@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import Flatbush from 'flatbush';
 import geoflatbush from 'geoflatbush';
 import { config } from './config.js';

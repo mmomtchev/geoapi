@@ -9,9 +9,18 @@ async function reload() {
     return loadData().catch(e => console.error(e));
 }
 
+function cors(req, res, next) {
+    if (config.cors) {
+        res.header("Access-Control-Allow-Origin", config.cors);
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    }
+    next();
+}
+
 process.on('SIGHUP', reload);
 const app = express();
 loadConfig(process.argv[2]);
+app.use(cors);
 if (config.pidfile)
     fs.writeFileSync(config.pidfile, process.pid.toString());
 const port = config.port || 8080;
