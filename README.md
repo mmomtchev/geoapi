@@ -2,7 +2,7 @@
 
 geoapi is an open-source API server that provides resolution of lat:lon coordinates to inhabited places and/or geographical features. It uses the free Geonames database and public GeoJSON data sources.
 
-The data structure is a packed Hilbert R-Tree provided by (mourner/Flatbush)[https://github.com/mourner/flatbush].
+The data structure is a packed Hilbert R-Tree provided by [mourner/Flatbush](https://github.com/mourner/flatbush).
 
 It supports refreshing the data on the fly without restart and without service interruption. Hot reloading doubles the amount of memory required, as the process needs to be able to store two copies of the data while it is rebuilding the R-Tree.
 
