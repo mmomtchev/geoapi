@@ -1,10 +1,13 @@
-
-// This is much faster than the "official" async readline in node
-// which requires resolving one Promise per line read
 export async function readLines(rs, ctx, parseLine) {
+    // This is much faster than the "official" async readline in node
+    // which requires resolving one Promise per line read
     let t0 = Date.now();
     rs.setEncoding('utf-8');
     let remainder = '';
+    // This is the secret to geoapi responding even while hot-reloading
+    // Resolving a Promise requires one full Node.js event loop, giving
+    // a chance to all network sockets to deliver their data and run 
+    // their handlers
     for await (const buf of rs) {
         const lines = (remainder + buf).split(/\r?\n/g);
         remainder = lines.pop();
@@ -41,8 +44,13 @@ export function polygonIncludes(polygon, lon, lat) {
         let xi = polygon[i][0], yi = polygon[i][1];
         let xj = polygon[j][0], yj = polygon[j][1];
 
-        let intersect = ((yi > lat) != (yj > lat))
-            && (lon < (xj - xi) * (lat - yi) / (yj - yi) + xi);
+        let intersect;
+        try {
+            intersect = ((yi > lat) != (yj > lat))
+                && (lon < (xj - xi) * (lat - yi) / (yj - yi) + xi);
+        } catch (e) {
+            intersect = true;
+        }
         if (intersect) inside = !inside;
     }
 
