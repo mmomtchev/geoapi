@@ -1,5 +1,7 @@
 # geoapi
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 geoapi is an open-source API server that provides resolution of lat:lon coordinates to inhabited places and/or geographical features. It uses the free Geonames database and public GeoJSON data sources.
 
 The data structure is a packed Hilbert R-Tree provided by [mourner/Flatbush](https://github.com/mourner/flatbush).
@@ -71,7 +73,7 @@ Create a config file or use the default
     "pidfile": "geo.pid"
 }
 ```
-This files configures three data sources: the Geonames main table and the Geonames alt table and the French GeoJSON data. The full Geonames database is quite large (1.5G), so you can filter the items and select to include only a subset of the fields. This example config file will include only the inhabited places (class="P") of France and Andorra. Remove the *country* field to include all countries. The world database of inhabited places requires about 4GB of RAM per process if you do not need to hot-reload the database and 8GB of RAM per process if you need it. The full database of all features requires twice those amounts. Omitting the *alt* and *tz* fields can cut memory usage by almost 2.
+This files configures three data sources: the Geonames main table, the Geonames alt table and the French GeoJSON data. The full Geonames database is quite large (1.5G), so you can filter the items and select to include only a subset of the fields. This example config file will include only the inhabited places (class="P") of France and Andorra. Remove the *country* field to include all countries. The world database of inhabited places requires about 4GB of RAM per process if you do not need to hot-reload the database and 8GB of RAM per process if you need it. The full database of all features requires twice those amounts. Omitting the *alt* and *tz* fields can cut memory usage by almost 2.
 
 The Geonames alt table is configured with only one field, *post*, the postal code. Fields in *first* will add only the first matched item, fields in *all* will add all matching items. For the postal codes, the additional postal codes will usually be the various CEDEX codes.
 
@@ -120,3 +122,6 @@ Hot-reloading is triggered by sending the process a SIGHUP
 ```bash
 kill -HUP `cat geo.pid`
 ```
+
+## License
+[GPL](https://choosealicense.com/licenses/gpl-3.0/)
