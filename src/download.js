@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as child from 'child_process';
 const config = JSON.parse(fs.readFileSync('config.json'));
 
+fs.mkdirSync(config.data_dir, { recusrive: true });
 for (const conf of [config.geodb, config.altdb, ...config.geojson]) {
     const ext = path.parse((new URL(conf.src)).pathname).ext;
     let outf = path.resolve(config.data_dir, conf.file);
