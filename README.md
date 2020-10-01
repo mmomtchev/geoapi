@@ -25,7 +25,8 @@ The current version is available only here:
 ```bash
 git clone https://github.com/mmomtchev/geoapi.git
 cd geoapi
-npm run download
+npm i
+npm run download   # requires unzip
 ```
 
 Create a config file or use the default
