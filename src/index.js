@@ -29,7 +29,9 @@ app.get([
     '/:lat/:lon/:type'
 ], apiCall);
 
-loadData().then(() => app.listen(port, () => {
-    process.title = `geoapi :${port}`;
-    console.log(`ready at :${port}`);
-}));
+loadData()
+    .then(() => app.listen(port, () => {
+        process.title = `geoapi :${port}`;
+        console.log(`ready at :${port}`);
+    }))
+    .catch(e => console.error(e));
