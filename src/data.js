@@ -1,11 +1,10 @@
 import Flatbush from 'flatbush';
-import geoflatbush from 'geoflatbush';
+import { around } from 'geoflatbush/index.mjs';
 import { config } from './config.js';
 import * as geodb from './geodb.js';
 import * as altdb from './altdb.js';
 import * as geojson from './geojson.js';
 import { polygonIncludes, WGS84Distance } from './util.js';
-const around = geoflatbush.around;
 
 let geoDataRTree;
 let geoDataArray;

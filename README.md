@@ -25,7 +25,6 @@ The current version is available only here:
 ```bash
 git clone https://github.com/mmomtchev/geoapi.git
 cd geoapi
-npm i
 npm run download   # requires unzip (or Expand-Archive on Win32)
 ```
 

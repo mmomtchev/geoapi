@@ -5,8 +5,9 @@
   "type": "module",
   "module": "index.js",
   "scripts": {
-    "download": "node src/download",
-    "start": "node --max-old-space-size=8192 src/index.js"
+    "download": "node download",
+    "bundle": "rollup -c",
+    "start": "node --max-old-space-size=8192 geoapi.js"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,12 @@
     "express": "^4.17.1",
     "flatbush": "^3.3.0",
     "geoflatbush": "^1.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "rollup-plugin-executable": "^1.6.0",
+    "rollup-plugin-terser": "^7.0.2"
   }
 }
