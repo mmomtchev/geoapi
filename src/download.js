@@ -18,7 +18,11 @@ for (const conf of [config.geodb, config.altdb, ...config.geojson]) {
     file.on('finish', () => {
         console.log('downloaded', outf);
         if (ext.toLowerCase() === '.zip') {
-            child.execFile('unzip', ['-ox', outf], {cwd: config.data_dir}, (err, stdout, stderr) => {
+            const zipCmd = process.platform === 'win32' ? 'powershell' : 'unzip';
+            const zipArgs = process.platform === 'win32'
+                ? ['Expand-Archive', outf, '.']
+                : ['-ox', outf];
+            child.execFile(zipCmd, zipArgs, {cwd: config.data_dir}, (err, stdout, stderr) => {
                 if (err)
                     console.error('unzip failed', err, stderr);
             });
