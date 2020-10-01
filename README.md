@@ -19,6 +19,10 @@ In practice this means that maybe one day *geoapi* will have plugins and will su
 
 All geographical coordinates are in lon:lat format in the source code and lat:lon in the externally visible API.
 
+## Medium story on the file reading method used
+
+[There is a medium story on the method used for efficiently reading the 1.6GB CSV file in memory that was featured on The Startup.](https://medium.com/swlh/reading-large-structured-text-files-in-node-js-7c4c4b84332b)
+
 ## Installation
 
 The current version is available only here:
