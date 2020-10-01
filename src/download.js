@@ -4,13 +4,14 @@ import * as path from 'path';
 import * as child from 'child_process';
 const config = JSON.parse(fs.readFileSync('config.json'));
 
-fs.mkdirSync(config.data_dir, { recusrive: true });
+fs.mkdirSync(config.data_dir, { recursive: true, mode: 0o755 });
 for (const conf of [config.geodb, config.altdb, ...config.geojson]) {
     const ext = path.parse((new URL(conf.src)).pathname).ext;
     let outf = path.resolve(config.data_dir, conf.file);
     if (ext.toLowerCase() === '.zip')
         outf += '.zip';
     const file = fs.createWriteStream(outf);
+    console.log('downloading', conf.src);
     http.get(conf.src, function (response) {
         response.pipe(file);
     });
