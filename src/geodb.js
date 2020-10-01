@@ -61,7 +61,3 @@ export async function load(array) {
 
     await readLines(geodb, array, parseLine);
 }
-
-export function t() {
-	console.log(t0, t1, t2);
-}
