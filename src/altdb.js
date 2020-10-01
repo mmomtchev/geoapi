@@ -23,9 +23,14 @@ export function loadConfig(config) {
         config.altdb._includeFields = ['id', 'iso', 'alt', ...config.altdb.fields.first, ...config.altdb.fields.all].includes(AltFields[f]);
 }
 
-function parseAltLine(map, line) {
+function parseAltLine(map, line, lineStart, lineEnd) {
     let o = {};
-    for (let start = 0, end = line.indexOf('\t'), i = 0; end != -1; start = end + 1, end = line.indexOf('\t', start), i++) {
+    lineStart = lineStart || 0;
+    lineEnd = lineEnd || line.length;
+    for (let start = lineStart, end = line.indexOf('\t', lineStart), i = 0;
+        end != -1 && end < lineEnd;
+        start = end + 1, end = line.indexOf('\t', start), i++) {
+        
         if (config.geodb._includeFields[i])
             o[AltFields[i]] = line.substring(start, end);
 

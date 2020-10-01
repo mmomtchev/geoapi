@@ -9,11 +9,17 @@ export async function readLines(rs, ctx, parseLine) {
     // a chance to all network sockets to deliver their data and run 
     // their handlers
     for await (const buf of rs) {
-        const lines = (remainder + buf).split(/\r?\n/g);
-        remainder = lines.pop();
-        for (const line of lines) {
-            parseLine(ctx, line);
+        let start = 0;
+        let end;
+        while ((end = buf.indexOf('\n', start)) !== -1) {
+            if (start == 0 && remainder.length > 0) {
+                parseLine(ctx, remainder + buf.slice(0, end));
+                remainder = '';
+            } else
+                parseLine(ctx, buf, start, end);
+            start = end + 1;
         }
+        remainder = buf.slice(start);
     }
     console.log(rs.path, `data read ${Date.now() - t0}ms`);
 }

@@ -3,6 +3,7 @@ import * as path from 'path';
 import { readLines } from './util.js';
 import { config } from './config.js';
 
+
 const Fields = [
     'id',
     'name',
@@ -34,11 +35,16 @@ export function loadConfig(config) {
     config.geodb._includeFields = [];
     for (const f in Fields)
         config.geodb._includeFields[f] = ['lat', 'lon', 'id', ...config.geodb.fields].includes(Fields[f]);
-
 }
 
-function parseLine(array, line) {
-    for (let start = 0, end = line.indexOf('\t'), i = 0; end != -1; start = end + 1, end = line.indexOf('\t', start), i++) {
+function parseLine(array, line, lineStart, lineEnd) {
+    lineStart = lineStart || 0;
+    lineEnd = lineEnd || line.length;
+
+    for (let start = lineStart, end = line.indexOf('\t', lineStart), i = 0;
+        end != -1 && end < lineEnd;
+        start = end + 1, end = line.indexOf('\t', start), i++) {
+        
         if (config.geodb.filter[Fields[i]]) {
             if (!line.substring(start, end).match(config.geodb._filterRE[Fields[i]]))
                 return;
@@ -46,10 +52,12 @@ function parseLine(array, line) {
     }
 
     let o = {};
-    for (let start = 0, end = line.indexOf('\t'), i = 0; end != -1; start = end + 1, end = line.indexOf('\t', start), i++) {
+    for (let start = lineStart, end = line.indexOf('\t', lineStart), i = 0;
+        end != -1 && end < lineEnd;
+        start = end + 1, end = line.indexOf('\t', start), i++) {
+        
         if (config.geodb._includeFields[i])
             o[Fields[i]] = line.substring(start, end);
-            
     }
 
     array.push(o);
