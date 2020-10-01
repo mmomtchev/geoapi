@@ -6,16 +6,14 @@
         "file": "allCountries.txt",
         "src": "https://download.geonames.org/export/dump/allCountries.zip",
         "filter": {
-            "class": "P",
-            "country": "FR|AD"
+            "class": "P"
         },
         "fields": [
             "name",
             "ascii",
             "class",
             "country",
-            "tz",
-            "alt"
+            "tz"
         ]
     },
     "altdb": {
