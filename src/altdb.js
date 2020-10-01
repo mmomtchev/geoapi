@@ -4,29 +4,32 @@ import Map from 'collections/map.js';
 import { readLines } from './util.js';
 import { config } from './config.js';
 
-const AltFields = {
-    'altid': 0,
-    'id': 1,
-    'iso': 2,
-    'alt': 3,
-    'pref': 4,
-    'short': 5,
-    'colloq': 6,
-    'hist': 7,
-    'from': 8,
-    'to': 9
-};
+const AltFields = [
+    'altid',
+    'id',
+    'iso',
+    'alt',
+    'pref',
+    'short',
+    'colloq',
+    'hist',
+    'from',
+    'to'
+];
+
+export function loadConfig(config) {
+    config.altdb._includeFields = [];
+    for (const f in AltFields)
+        config.altdb._includeFields = ['id', 'iso', 'alt', ...config.altdb.fields.first, ...config.altdb.fields.all].includes(AltFields[f]);
+}
 
 function parseAltLine(map, line) {
-    const data = line.split('\t');
-
     let o = {};
-    for (const f of Object.keys(config.altdb.fields))
-        o[f] = data[AltFields[f]];
-    o.id = +data[AltFields['id']];
-    o.iso = data[AltFields['iso']];
-    o.alt = data[AltFields['alt']];
+    for (let start = 0, end = line.indexOf('\t'), i = 0; end != -1; start = end + 1, end = line.indexOf('\t', start), i++) {
+        if (config.geodb._includeFields[i])
+            o[AltFields[i]] = line.substring(start, end);
 
+    }
     if (map[o.id] !== undefined) {
         if (config.altdb.fields.all.includes(o.iso)) {
             if (map[o.id][o.iso] === undefined)

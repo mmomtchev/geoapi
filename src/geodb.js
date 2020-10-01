@@ -3,42 +3,54 @@ import * as path from 'path';
 import { readLines } from './util.js';
 import { config } from './config.js';
 
-const Fields = {
-    'id': 0,
-    'name': 1,
-    'ascii': 2,
-    'alt': 3,
-    'lat': 4,
-    'lon': 5,
-    'class': 6,
-    'feature': 7,
-    'country': 8,
-    'cc2': 9,
-    'admin1': 10,
-    'admin2': 11,
-    'admin3': 12,
-    'admin4': 13,
-    'pop': 14,
-    'elev': 15,
-    'dem': 16,
-    'tz': 17,
-    'updated': 18
-};
+const Fields = [
+    'id',
+    'name',
+    'ascii',
+    'alt',
+    'lat',
+    'lon',
+    'class',
+    'feature',
+    'country',
+    'cc2',
+    'admin1',
+    'admin2',
+    'admin3',
+    'admin4',
+    'pop',
+    'elev',
+    'dem',
+    'tz',
+    'updated'
+];
+
+export function loadConfig(config) {
+    /* Precompile the regexps */
+    config.geodb._filterRE = {};
+    for (const r in config.geodb.filter)
+        config.geodb._filterRE[r] = new RegExp(config.geodb.filter[r]);
+
+    config.geodb._includeFields = [];
+    for (const f in Fields)
+        config.geodb._includeFields[f] = ['lat', 'lon', 'id', ...config.geodb.fields].includes(Fields[f]);
+
+}
 
 function parseLine(array, line) {
-    const data = line.split('\t');
-
-    for (const f of Object.keys(config.geodb.filter))
-        if (!data[Fields[f]].match(config.geodb.filter[f]))
-            return;
+    for (let start = 0, end = line.indexOf('\t'), i = 0; end != -1; start = end + 1, end = line.indexOf('\t', start), i++) {
+        if (config.geodb.filter[Fields[i]]) {
+            if (!line.substring(start, end).match(config.geodb._filterRE[Fields[i]]))
+                return;
+        }
+    }
 
     let o = {};
-    for (const f of config.geodb.fields)
-        o[f] = data[Fields[f]];
-
-    o.lat = +data[Fields['lat']];
-    o.lon = +data[Fields['lon']];
-    o.id = data[Fields['id']];
+    for (let start = 0, end = line.indexOf('\t'), i = 0; end != -1; start = end + 1, end = line.indexOf('\t', start), i++) {
+        if (config.geodb._includeFields[i])
+            o[Fields[i]] = line.substring(start, end);
+            
+    }
 
     array.push(o);
 }
@@ -48,4 +60,8 @@ export async function load(array) {
     const geodb = fs.createReadStream(path.resolve(config.data_dir, config.geodb.file));
 
     await readLines(geodb, array, parseLine);
+}
+
+export function t() {
+	console.log(t0, t1, t2);
 }
