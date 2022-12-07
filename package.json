@@ -27,7 +27,7 @@
   "homepage": "https://github.com/mmomtchev/geoapi#readme",
   "dependencies": {
     "collections": "^5.1.11",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "flatbush": "^3.3.0",
     "geoflatbush": "^1.0.0"
   },
