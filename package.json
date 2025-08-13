@@ -28,7 +28,7 @@
   "dependencies": {
     "collections": "^5.1.13",
     "express": "^5.1.0",
-    "flatbush": "^4.4.1",
+    "flatbush": "^4.5.0",
     "geoflatbush": "^2.0.0"
   },
   "devDependencies": {
